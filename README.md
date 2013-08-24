@@ -1,3 +1,3 @@
-# Postgres
+# elixir-postgres
 
-** TODO: Add description **
+Database network adapter for Elixir
