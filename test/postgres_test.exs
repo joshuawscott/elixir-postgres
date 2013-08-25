@@ -7,4 +7,10 @@ defmodule PostgresTest do
     assert(status == :ok)
   end
 
+  test "Parses packet response into messages" do
+    # This is a network packet with two messages: 'K' and 'C' denote the beginning of the message.
+    netchunk = <<"K", 0, 0, 0, 12, 0, 0, 0, 1, 0, 0, 0, 2, "C", 0, 0, 0, 13, "SELECT 1", 0>>
+    expected = [{:backend_key_data, 12, <<0,0,0,1,0,0,0,2>>},{:command_complete, 13, "SELECT 1\0"}]
+    assert(Postgres.parse_messages(netchunk) == expected)
+  end
 end
