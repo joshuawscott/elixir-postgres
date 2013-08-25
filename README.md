@@ -1,3 +1,3 @@
 # elixir-postgres
 
-Database network adapter for Elixir
+PostgreSQL Database adapter for Elixir
