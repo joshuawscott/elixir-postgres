@@ -13,4 +13,9 @@ defmodule PostgresTest do
     expected = [{:backend_key_data, 12, <<0,0,0,1,0,0,0,2>>},{:command_complete, 13, "SELECT 1\0"}]
     assert(Postgres.parse_messages(netchunk) == expected)
   end
+
+  #test "Parses incomplete packet response into messages, plus incomplete message" do
+  #  assert(TODO)
+  #end
+
 end

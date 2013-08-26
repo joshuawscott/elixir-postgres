@@ -46,16 +46,20 @@ defmodule Postgres do
       end)
   end
 
-  defp tcp_connect(address, port, options, timeout // 5000) do
+  defp tcp_connect(address, port, options, timeout) do
     :gen_tcp.connect(address, port, options, timeout)
   end
 
+  @doc """
+  Takes a response from Postgres.recv/2
+  Returns a List of messages
+  """
   def parse_messages(binary) do
     binary_to_message_list(binary, [])
   end
 
-  def binary_to_message_list("", list), do: list
-  def binary_to_message_list(<<a,b,c,d,e,rest :: binary>>, list) do
+  defp binary_to_message_list("", list), do: list
+  defp binary_to_message_list(<<a,b,c,d,e,rest :: binary>>, list) do
     type = type_from_id_char(a)
     length = b * 4096 + c * 256 + d * 16 + e
     body = String.slice(rest, 0, length - 4)
@@ -68,7 +72,7 @@ defmodule Postgres do
   takes a char and gives a snake_cased atom that matches the message name.
   example:
 
-    "1" (actually 49) is ParseComplete, so it returns: :parse_complete
+    "1" (actually, 49 in ASCII/UTF8) is ParseComplete, so it returns: :parse_complete
 
   :unknown is returned if the char is not known.  This shouldn't happen unless
   PostgreSQL implements new message types.
@@ -97,6 +101,5 @@ defmodule Postgres do
   def type_from_id_char(?W), do: :copy_both_response
   def type_from_id_char(?Z), do: :ready_for_query
   def type_from_id_char(_other_val), do: :unknown
-
 
 end
