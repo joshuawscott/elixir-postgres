@@ -33,7 +33,7 @@ defmodule Postgres do
   Returns {:ok, binary} or {:error, reason}
   see Postgres.send for example
   """
-  def recv(socket, timeout // :infinity), do: :gen_tcp.recv(socket, 0, timeout)
+  def recv(socket, timeout \\ :infinity), do: :gen_tcp.recv(socket, 0, timeout)
 
   defp normalize_connect_opts(opts) do
     default_opts = [

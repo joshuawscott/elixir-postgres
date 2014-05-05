@@ -4,8 +4,9 @@ defmodule Postgres.Mixfile do
   def project do
     [ app: :postgres,
       version: "0.0.1",
-      elixir: "~> 0.10.2-dev",
-      deps: deps ]
+      elixir: "~> 0.13",
+      deps: deps,
+      compile_path: 'ebin' ]
   end
 
   # Configuration for the OTP application

@@ -2,7 +2,7 @@ defmodule PGQuery do
 
   def connect do
     {:ok, socket} = Postgres.connect
-    :ok = Postgres.send socket, Postgres.Message.startup_message("joshua", "joshua")
+    :ok = Postgres.send socket, Postgres.Message.startup_message("jscott", "jscott")
     {:ok, response} = Postgres.recv socket
     message_list = Postgres.parse_messages response
     {:ok, socket, message_list}
